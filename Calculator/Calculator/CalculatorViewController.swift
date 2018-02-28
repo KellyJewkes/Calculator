@@ -26,7 +26,6 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
     var result = ""
     var currentOperation:Operation = .NULL
     
-    
     //MARK: - Outlets
     @IBOutlet weak var toLabel: UILabel!
     @IBOutlet weak var fromLabel: UILabel!
@@ -38,7 +37,6 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     @IBOutlet weak var outputLabel: UILabel!
     
-    
     //MARK: - Arrays
     let measurments = ["Inches", "Feet", "Centimeters", "Meters"]
     let measurments2 = ["Inches", "Feet", "Centimeters", "Meters"]
@@ -47,7 +45,6 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
     let foot = "Feet"
     let cm = "Centimeters"
     let m = "Meters"
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,11 +89,11 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
         }
         toLabel.text = measurments[row]
         fromLabel.text = measurments2[row]
-        
     }
     
     @IBAction func convertTapped(_ sender: UIButton) {
         
+        //MARK: - animation
         if mushroomLeading.constant == -100 {
             mushroomLeading.constant = 450
             
@@ -112,6 +109,7 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
             },completion: nil)
         }
         
+        //MARK: - conversion equations
         if fromLabel.text == toLabel.text {
             return
         } else if fromLabel.text == inch && toLabel.text == foot {
@@ -157,11 +155,13 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
         }else if fromLabel.text == cm && toLabel.text == foot {
             let intoInt = (outputLabel.text! as NSString) .doubleValue
             outputLabel.text = "\(intoInt / 30.48)"
+            
         }else if fromLabel.text == cm && toLabel.text == m {
             let intoInt = (outputLabel.text! as NSString) .doubleValue
             outputLabel.text = "\(intoInt / 100)"
         }
     }
+    
     //use tags for each number... one action!//
     @IBAction func numberTapped(_ sender: UIButton) {
         if runningNumber.count <= 9 {
@@ -169,6 +169,8 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
             outputLabel.text = runningNumber
         }
     }
+    
+    //standard calculator buttons
     @IBAction func allClearTapped(_ sender: UIButton) {
         runningNumber = ""
         leftValue = ""
@@ -176,15 +178,15 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
         result = ""
         currentOperation = .NULL
         outputLabel.text = "0"
-        
     }
+    
     @IBAction func dotTapped(_ sender: UIButton) {
         if runningNumber.count <= 8 {
             runningNumber += "."
             outputLabel.text = runningNumber
-            
         }
     }
+    
     @IBAction func equalTapped(_ sender: UIButton) {
         operation(operation: currentOperation)
     }
@@ -229,10 +231,4 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
             currentOperation = operation
         }
     }
-    
 }
-
-
-
-
-
