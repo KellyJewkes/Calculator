@@ -30,7 +30,9 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
     //MARK: - Outlets
     @IBOutlet weak var toLabel: UILabel!
     @IBOutlet weak var fromLabel: UILabel!
+    @IBOutlet weak var mushroomLeading: NSLayoutConstraint!
     
+    @IBOutlet weak var mushroomWidth: NSLayoutConstraint!
     @IBOutlet weak var convertedFrom: UIPickerView!
     @IBOutlet weak var convertedTo: UIPickerView!
     
@@ -54,6 +56,8 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
         convertedTo.delegate = self
         convertedTo.dataSource = self
         outputLabel.text = "0"
+        toLabel.text = inch
+        fromLabel.text = inch
     }
     
     
@@ -93,8 +97,21 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     @IBAction func convertTapped(_ sender: UIButton) {
         
-
-        var currentNum = outputLabel.text
+        if mushroomLeading.constant == -100 {
+            mushroomLeading.constant = 450
+            
+            UIView.animate(withDuration: 2.5, animations: {
+                self.view.layoutIfNeeded()
+            },completion: nil)
+            
+        }else if mushroomLeading.constant == 450 {
+            mushroomLeading.constant = -100
+            
+            UIView.animate(withDuration: 2.5, animations: {
+                self.view.layoutIfNeeded()
+            },completion: nil)
+        }
+        
         if fromLabel.text == toLabel.text {
             return
         } else if fromLabel.text == inch && toLabel.text == foot {
@@ -104,13 +121,46 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
         }else if fromLabel.text == inch && toLabel.text == cm {
             let intoInt = (outputLabel.text! as NSString) .doubleValue
             outputLabel.text = "\(intoInt * 2.54)"
-        
+            
         }else if fromLabel.text == inch && toLabel.text == m {
             let intoInt = (outputLabel.text! as NSString) .doubleValue
             outputLabel.text = "\(intoInt * 0.0254)"
+            
+        }else if fromLabel.text == foot && toLabel.text == inch {
+            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            outputLabel.text = "\(intoInt * 12)"
+            
+        }else if fromLabel.text == foot && toLabel.text == cm {
+            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            outputLabel.text = "\(intoInt * 30.48)"
+            
+        }else if fromLabel.text == foot && toLabel.text == m {
+            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            outputLabel.text = "\(intoInt / 3.2808)"
+            
+        }else if fromLabel.text == m && toLabel.text == inch {
+            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            outputLabel.text = "\(intoInt / 0.0254)"
+            
+        }else if fromLabel.text == m && toLabel.text == foot {
+            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            outputLabel.text = "\(intoInt / 0.3048)"
+            
+        }else if fromLabel.text == m && toLabel.text == cm {
+            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            outputLabel.text = "\(intoInt * 100)"
+            
+        }else if fromLabel.text == cm && toLabel.text == inch {
+            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            outputLabel.text = "\(intoInt / 2.54)"
+            
+        }else if fromLabel.text == cm && toLabel.text == foot {
+            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            outputLabel.text = "\(intoInt / 30.48)"
+        }else if fromLabel.text == cm && toLabel.text == m {
+            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            outputLabel.text = "\(intoInt / 100)"
         }
-    
-        
     }
     //use tags for each number... one action!//
     @IBAction func numberTapped(_ sender: UIButton) {
