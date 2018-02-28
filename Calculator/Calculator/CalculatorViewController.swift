@@ -30,17 +30,14 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var toLabel: UILabel!
     @IBOutlet weak var fromLabel: UILabel!
     @IBOutlet weak var mushroomLeading: NSLayoutConstraint!
-    
     @IBOutlet weak var mushroomWidth: NSLayoutConstraint!
     @IBOutlet weak var convertedFrom: UIPickerView!
     @IBOutlet weak var convertedTo: UIPickerView!
-    
     @IBOutlet weak var outputLabel: UILabel!
     
-    //MARK: - Arrays
+
     let measurments = ["Inches", "Feet", "Centimeters", "Meters"]
     let measurments2 = ["Inches", "Feet", "Centimeters", "Meters"]
-    
     let inch = "Inches"
     let foot = "Feet"
     let cm = "Centimeters"
@@ -56,7 +53,6 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
         toLabel.text = inch
         fromLabel.text = inch
     }
-    
     
     //MARK: - Picker Functions
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -112,52 +108,53 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
         //MARK: - conversion equations
         if fromLabel.text == toLabel.text {
             return
+            
         } else if fromLabel.text == inch && toLabel.text == foot {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 12)"
             
         }else if fromLabel.text == inch && toLabel.text == cm {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 2.54)"
             
         }else if fromLabel.text == inch && toLabel.text == m {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 0.0254)"
             
         }else if fromLabel.text == foot && toLabel.text == inch {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 12)"
             
         }else if fromLabel.text == foot && toLabel.text == cm {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 30.48)"
             
         }else if fromLabel.text == foot && toLabel.text == m {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 3.2808)"
             
         }else if fromLabel.text == m && toLabel.text == inch {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 0.0254)"
             
         }else if fromLabel.text == m && toLabel.text == foot {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 0.3048)"
             
         }else if fromLabel.text == m && toLabel.text == cm {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 100)"
             
         }else if fromLabel.text == cm && toLabel.text == inch {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 2.54)"
             
         }else if fromLabel.text == cm && toLabel.text == foot {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 30.48)"
             
         }else if fromLabel.text == cm && toLabel.text == m {
-            let intoInt = (outputLabel.text! as NSString) .doubleValue
+            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 100)"
         }
     }
@@ -209,18 +206,22 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
                 rightValue = runningNumber
                 runningNumber = ""
                 
+                    guard let leftSide = Double(leftValue) else {return}
+                    guard let rightSide = Double(rightValue) else {return}
+                
                 if currentOperation == .Add {
-                    result = "\(Double(leftValue)! + Double(rightValue)!)"
+                    result = "\(leftSide + rightSide)"
                 }else if currentOperation == .Subtract {
-                    result = "\(Double(leftValue)! - Double(rightValue)!)"
+                    result = "\(leftSide - rightSide)"
                 }else if currentOperation == .Multiply {
-                    result = "\(Double(leftValue)! * Double(rightValue)!)"
+                    result = "\(leftSide * rightSide)"
                 }else if currentOperation == .Divide {
-                    result = "\(Double(leftValue)! / Double(rightValue)!)"
+                    result = "\(leftSide / rightSide )"
                 }
                 leftValue = result
-                if (Double(result)!.truncatingRemainder(dividingBy: 1) == 0) {
-                    result = "\(Int(Double(result)!))"
+                if (Double(result)?.truncatingRemainder(dividingBy: 1) == 0) {
+                    guard let thisResult = (Double(result)) else {return}
+                    result = "\(Int(thisResult))"
                 }
                 outputLabel.text = result
             }
