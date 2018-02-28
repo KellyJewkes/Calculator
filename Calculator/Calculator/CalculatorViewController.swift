@@ -35,7 +35,7 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
     @IBOutlet weak var convertedTo: UIPickerView!
     @IBOutlet weak var outputLabel: UILabel!
     
-
+    
     let measurments = ["Inches", "Feet", "Centimeters", "Meters"]
     let measurments2 = ["Inches", "Feet", "Centimeters", "Meters"]
     let inch = "Inches"
@@ -106,55 +106,33 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
         }
         
         //MARK: - conversion equations
+        guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
+        
         if fromLabel.text == toLabel.text {
             return
-            
         } else if fromLabel.text == inch && toLabel.text == foot {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 12)"
-            
         }else if fromLabel.text == inch && toLabel.text == cm {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 2.54)"
-            
         }else if fromLabel.text == inch && toLabel.text == m {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 0.0254)"
-            
         }else if fromLabel.text == foot && toLabel.text == inch {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 12)"
-            
         }else if fromLabel.text == foot && toLabel.text == cm {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 30.48)"
-            
         }else if fromLabel.text == foot && toLabel.text == m {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 3.2808)"
-            
         }else if fromLabel.text == m && toLabel.text == inch {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 0.0254)"
-            
         }else if fromLabel.text == m && toLabel.text == foot {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 0.3048)"
-            
         }else if fromLabel.text == m && toLabel.text == cm {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt * 100)"
-            
         }else if fromLabel.text == cm && toLabel.text == inch {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 2.54)"
-            
         }else if fromLabel.text == cm && toLabel.text == foot {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 30.48)"
-            
         }else if fromLabel.text == cm && toLabel.text == m {
-            guard let intoInt = (outputLabel.text as NSString?)? .doubleValue else{return}
             outputLabel.text = "\(intoInt / 100)"
         }
     }
@@ -206,8 +184,8 @@ class CalculatorViewController: UIViewController, UIPickerViewDataSource, UIPick
                 rightValue = runningNumber
                 runningNumber = ""
                 
-                    guard let leftSide = Double(leftValue) else {return}
-                    guard let rightSide = Double(rightValue) else {return}
+                guard let leftSide = Double(leftValue) else {return}
+                guard let rightSide = Double(rightValue) else {return}
                 
                 if currentOperation == .Add {
                     result = "\(leftSide + rightSide)"
